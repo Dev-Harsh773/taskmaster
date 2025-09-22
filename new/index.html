@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskMaster - Your Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-effects">
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="brand-icon">
+                <i class="fas fa-check-double"></i>
+            </div>
+            <span class="brand-text">TaskMaster</span>
+        </div>
+        <div class="nav-menu">
+            <button class="nav-item active" data-page="dashboard">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </button>
+            <button class="nav-item" data-page="tasks">
+                <i class="fas fa-tasks"></i>
+                <span>My Tasks</span>
+            </button>
+            <button class="nav-item" data-page="calendar">
+                <i class="fas fa-calendar"></i>
+                <span>Calendar</span>
+            </button>
+        </div>
+        <div class="nav-user">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i> <div class="status-dot"></div>
+            </div>
+            <div class="user-info">
+                <span class="user-name">My Profile</span>
+                <span class="user-role">Online</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page active" id="dashboard-page">
+            <div class="page-header">
+                <div class="header-content">
+                    <h1 class="page-title">Dashboard</h1>
+                    <p class="page-subtitle">Here's your productivity overview for today.</p>
+                </div>
+                <button class="primary-btn add-task-btn">
+                    <i class="fas fa-plus"></i>
+                    <span>Add New Task</span>
+                </button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card completed-tasks">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number" id="completed-count">0</h3>
+                        <p class="stat-label">Tasks Completed</p>
+                    </div>
+                </div>
+                <div class="stat-card in-progress">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number" id="progress-count">0</h3>
+                        <p class="stat-label">Tasks in Progress</p>
+                    </div>
+                </div>
+                <div class="stat-card upcoming">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number" id="upcoming-count">0</h3>
+                        <p class="stat-label">Upcoming Deadlines</p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="progress-section">
+                <h2 class="section-title">Overall Task Progress</h2>
+                <div class="main-progress-bar-container">
+                    <div class="progress-info">
+                        <span class="progress-label">Completion</span>
+                        <span class="progress-percentage" id="overall-progress-percentage">0%</span>
+                    </div>
+                    <div class="progress-bar large">
+                        <div class="progress-fill" id="overall-progress-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tasks-section">
+                <h2 class="section-title">Upcoming Tasks</h2>
+                <div class="tasks-table">
+                    <div class="table-header">
+                        <div class="th">Task</div>
+                        <div class="th">Deadline</div>
+                        <div class="th">Status</div>
+                        <div class="th">Actions</div>
+                    </div>
+                    <div class="table-body" id="upcoming-tasks">
+                        </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="page" id="tasks-page">
+            <div class="page-header">
+                <div class="header-content">
+                    <h1 class="page-title">My Tasks</h1>
+                    <p class="page-subtitle">Manage and track all your tasks in one place.</p>
+                </div>
+                <button class="primary-btn add-task-btn">
+                    <i class="fas fa-plus"></i>
+                    <span>Add New Task</span>
+                </button>
+            </div>
+            <div class="task-filters">
+                <button class="filter-btn active" data-filter="all">All Tasks</button>
+                <button class="filter-btn" data-filter="pending">Pending</button>
+                <button class="filter-btn" data-filter="in-progress">In Progress</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+            </div>
+            <div class="tasks-list" id="tasks-list">
+                </div>
+        </div>
+
+        <div class="page" id="calendar-page">
+            <div class="page-header">
+                <div class="header-content">
+                    <h1 class="page-title">Calendar</h1>
+                    <p class="page-subtitle">View your tasks and deadlines in calendar format.</p>
+                </div>
+            </div>
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button class="calendar-nav" id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                    <h3 class="calendar-title" id="calendar-title"></h3>
+                    <button class="calendar-nav" id="next-month"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="calendar-grid" id="calendar-grid">
+                    </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="task-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Task</h3>
+                <button class="modal-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="task-form">
+                    <div class="form-group">
+                        <label for="task-name">Task Name</label>
+                        <input type="text" id="task-name" placeholder="e.g., Design a new landing page" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-description">Description</label>
+                        <textarea id="task-description" placeholder="Add a detailed description..." rows="3"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="task-priority">Priority</label>
+                            <select id="task-priority">
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high" selected>High</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-due-date">Due Date</label>
+                            <input type="date" id="task-due-date" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-subtasks">Subtasks (one per line)</label>
+                        <textarea id="task-subtasks" placeholder="e.g.,&#10;Research competitor analysis&#10;Outline report sections" rows="3"></textarea>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="secondary-btn modal-close">Cancel</button>
+                        <button type="submit" class="primary-btn"><i class="fas fa-plus"></i> Add Task</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="task-detail-modal">
+        <div class="modal large">
+            <div class="modal-header">
+                <h3 class="modal-title" id="detail-task-name">Task Details</h3>
+                <button class="modal-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="task-detail-content">
+                    <div class="detail-section">
+                        <h4>Description</h4>
+                        <p id="detail-description"></p>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-item">
+                            <span class="detail-label">Assignee</span>
+                            <div class="assignee-info">
+                                <i class="fas fa-user"></i> <span>Assigned to You</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Due Date</span>
+                            <span id="detail-due-date"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Priority</span>
+                            <span class="priority-badge" id="detail-priority"></span>
+                        </div>
+                    </div>
+                    <div class="detail-section">
+                        <h4>Subtasks</h4>
+                        <div class="subtasks-list" id="detail-subtasks"></div>
+                    </div>
+                    <div class="task-actions">
+                        <button class="secondary-btn" id="edit-task-btn"><i class="fas fa-edit"></i> Edit Task</button>
+                        <button class="danger-btn" id="delete-task-btn"><i class="fas fa-trash"></i> Delete Task</button>
+                        <button class="success-btn" id="complete-task-btn"><i class="fas fa-check"></i> Mark Complete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
